@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
+/*probando git*/
 @Preview
 @Composable
 fun MostrarScaffold(){
