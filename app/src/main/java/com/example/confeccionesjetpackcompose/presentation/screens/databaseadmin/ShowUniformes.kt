@@ -29,24 +29,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.lazy.LazyColumn
+
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ModeEdit
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 
 import androidx.compose.ui.draw.clip
 
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -57,24 +51,18 @@ import com.example.confeccionesjetpackcompose.presentation.components.Background
 import java.io.File
 
 
-import android.app.Activity
-import android.content.Intent
 
-import android.os.Environment
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.CircleShape
+
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButton
 
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-
 
 
 
@@ -256,7 +244,7 @@ fun UniformesItem(uniforme: UniformesDb, onDeleteUniformesDb:(UniformesDb)->Unit
         Text(text = "${uniforme.price}", modifier = Modifier.weight(0.10f))
         Text(text = "${uniforme.size} ", modifier = Modifier.weight(0.05f), textAlign = TextAlign.Left)
         Text(text = "${uniforme.amount} ", modifier = Modifier.weight(0.05f), textAlign = TextAlign.Left)
-
+        //boton para modificar un elemento
         Button(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -270,25 +258,30 @@ fun UniformesItem(uniforme: UniformesDb, onDeleteUniformesDb:(UniformesDb)->Unit
             Row {
                 Icon(
                     imageVector = Icons.Filled.ModeEdit, contentDescription = "Modifier",
+                    tint = Color.Blue, // Cambia el color del icono en sí
                     modifier = Modifier.size(30.dp)
+                        .background(Color(0xFFFFFFFF))
                 )
             }
         }
 
-
+    //boton para borrar un elemento
         Button(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .clip(RoundedCornerShape(0.dp))
                 .height(30.dp) // Establece una altura de 20 dp
                 .width(30.dp), // Establece una anchura de 30 dp,
+                //.background(Color(0xFFE53935)), // Color de fondo elegido
             onClick = { showDeleteDialog = true },
             contentPadding = PaddingValues(1.dp)
         ) {
             Row {
                 Icon(
                     imageVector = Icons.Filled.Delete, contentDescription = "Delete",
-                    modifier = Modifier.size(30.dp)
+                    tint = Color.Red, // Cambia el color del icono en sí
+                    modifier = Modifier.size(30.dp) // Tamaño total del contenedor del fondo
+                        .background(Color(0xFFFFFFFF))
                 )
             }
         }

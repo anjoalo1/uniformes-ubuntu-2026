@@ -324,14 +324,6 @@ fun ProductosScreen(navController: NavController, viewModel: BillViewModel = vie
             }
         }
 
-
-       /* items(uniformesdb) { unim ->
-            Text(text = "Nombre: ${unim.nameArticle}")
-            Text(text = "Tamaño: ${unim.size}")
-            Text(text = "Precio: ${unim.price}")
-            Text(text = "Cantidad: ${unim.amount}")
-        }*/
-
         }
     }
 }

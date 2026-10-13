@@ -32,9 +32,11 @@ import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Transgender
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -221,17 +223,6 @@ fun SelectSizeProduct(uniformesdbpasar: List<UniformesDb>, viewModel: BillViewMo
         ){Text("Search")}
     }
 
-  /*  val sizeArticlesDb = uniformesdbpasar.filter { it.size =="8" }
-
-    Column {
-        sizeArticlesDb.forEach { unim ->
-            Text(text = "Nombre: ${unim.nameArticle}")
-            Text(text = "Tamaño: ${unim.size}")
-            Text(text = "Precio: ${unim.price}")
-            Text(text = "Cantidad: ${unim.amount}")
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-    }*/
 }
 
 
@@ -706,12 +697,18 @@ fun manualEntranceProduct(viewModel: BillViewModel = viewModel()){
     var nameError by rememberSaveable { mutableStateOf(false) }
     var sizeError by rememberSaveable { mutableStateOf(false) }
     var showDialogInputsProducts by remember { mutableStateOf(false) }
-    ExtendedFloatingActionButton(onClick = { showDialogInputsProducts = true }) {
-        //Text("Mostrar diálogo")
-        Icon(Icons.Filled.Add, "add product.")
+    ExtendedFloatingActionButton(onClick = { showDialogInputsProducts = true },
 
-        Text(text = "Add Uniform")
-    }
+        icon = { Icon(Icons.Filled.Add, contentDescription = "Icono") },
+        text = { Text(text = "Ingresar Manualmente") },
+        // 1. Configura la forma (Shape) igual que en tu botón
+        shape = RoundedCornerShape(10.dp),
+        // 2. Usa FloatingActionButtonDefaults para asignar el color de fondo
+        containerColor = Color(0xFFE53935),
+        // 3. Usa FloatingActionButtonDefaults para la elevación
+        elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 4.dp)
+
+        )
 
     if(showDialogInputsProducts){
 
@@ -771,12 +768,7 @@ fun manualEntranceProduct(viewModel: BillViewModel = viewModel()){
                 )
 
 
-                Button(onClick = {
-
-
-                }) {
-                    Text("Add Uniforme")
-                }
+                //Button(onClick = {}) { Text("Add Uniforme") }
             }
         },
         confirmButton = {
@@ -790,7 +782,11 @@ fun manualEntranceProduct(viewModel: BillViewModel = viewModel()){
                     val uniformeManual = Uniformes(id= concatenado, nameArticle= nameArticle, size=size, price= price.toDouble(), amount = amount.toInt())
                     viewModel.addOrUpdateUniforme(uniformeManual)
                 }
-            }) {
+            },
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                ) {
                 Text("Add Uniforme")
             }
         },
@@ -798,7 +794,12 @@ fun manualEntranceProduct(viewModel: BillViewModel = viewModel()){
             Button(onClick = {
                 /* cerrar dialogo */
                 showDialogInputsProducts = false
-            }) {
+
+            },
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE53935)),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                ) {
                 Text("Cancelar")
             }
         }
