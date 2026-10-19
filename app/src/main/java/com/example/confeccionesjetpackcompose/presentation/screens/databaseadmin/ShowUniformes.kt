@@ -36,11 +36,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ModeEdit
 import androidx.compose.material3.Icon
-
 import androidx.compose.runtime.mutableDoubleStateOf
-
 import androidx.compose.ui.draw.clip
-
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -49,23 +46,13 @@ import com.example.confeccionesjetpackcompose.data.database.entities.UniformesDb
 import com.example.confeccionesjetpackcompose.data.database.viewmodel.UniformesDbViewModel
 import com.example.confeccionesjetpackcompose.presentation.components.BackgroundImage
 import java.io.File
-
-
-
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.shape.CircleShape
-
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
-
-
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
-
-
-
 
 @Composable
 fun ListUniformesDb(navController: NavController, viewModeldD:UniformesDbViewModel) {
@@ -215,9 +202,6 @@ fun AddUniformes(viewModel: UniformesDbViewModel= hiltViewModel()){
             )
         }
 
-
-
-        //////
     }
 }
 
