@@ -23,9 +23,6 @@ import java.util.Locale
 
 
 
-
-
-import java.io.IOException
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 
@@ -203,8 +200,11 @@ class ApacheCreatePdf {
     fun crearPDFConTabla(productos: List<Uniformes>): String {
         val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val horaColombia = ZonedDateTime.now(ZoneId.of("America/Bogota"))
-        val horaFormateada = horaColombia.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss"))
+        //val horaFormateada = horaColombia.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss"))
         val file = File(downloadDir, "$myfecha.pdf")
+
+
+
 
         /* val document = PDDocument()
          val page = PDPage()*/
