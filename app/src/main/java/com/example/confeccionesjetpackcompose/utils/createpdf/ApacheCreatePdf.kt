@@ -20,15 +20,23 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Locale
 
-
-
-
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 
 
+//archivos despues del error
+import android.content.ContentValues
+import android.content.Context
+import android.net.Uri
+//import android.os.Environment
+import android.provider.MediaStore
+import java.io.IOException
+
+import java.io.OutputStream
+
+
 @RequiresApi(Build.VERSION_CODES.O)
-class ApacheCreatePdf {
+class ApacheCreatePdf (private val context: Context){
 
 
     val document = PDDocument()
@@ -198,10 +206,10 @@ class ApacheCreatePdf {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun crearPDFConTabla(productos: List<Uniformes>): String {
-        val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val horaColombia = ZonedDateTime.now(ZoneId.of("America/Bogota"))
+        //val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        //val horaColombia = ZonedDateTime.now(ZoneId.of("America/Bogota"))
         //val horaFormateada = horaColombia.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss"))
-        val file = File(downloadDir, "$myfecha.pdf")
+        //val file = File(downloadDir, "$myfecha.pdf")
 
 
 
@@ -328,10 +336,56 @@ class ApacheCreatePdf {
 
 
 
+        //contentStream.close()
+        //document.save(file)
+        //document.close()
+        //return myfecha
+
+
+        //aqui codigo nuevo despues del error:
         contentStream.close()
-        document.save(file)
+
+        val uri = guardarPdfEnDescargas(context, document, "$myfecha.pdf")
+
         document.close()
-        return myfecha
+
+        return if (uri != null) {
+            myfecha
+        } else {
+            throw IOException("No se pudo guardar el PDF en Descargas")
+        }
+    }
+
+
+    //funcion nueva despues del error en la misma clase:
+
+    private fun guardarPdfEnDescargas(
+        context: Context,
+        document: PDDocument,
+        nombreArchivo: String
+    ): Uri? {
+        val valores = ContentValues().apply {
+            put(MediaStore.Downloads.DISPLAY_NAME, nombreArchivo)
+            put(MediaStore.Downloads.MIME_TYPE, "application/pdf")
+            put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+        }
+
+        val resolver = context.contentResolver
+
+        val uri = resolver.insert(
+            MediaStore.Downloads.EXTERNAL_CONTENT_URI,
+            valores
+        ) ?: return null
+
+        try {
+            resolver.openOutputStream(uri)?.use { output: OutputStream ->
+                document.save(output)
+            }
+            return uri
+        } catch (e: Exception) {
+            resolver.delete(uri, null, null)
+            throw e
+        }
     }
 
 }

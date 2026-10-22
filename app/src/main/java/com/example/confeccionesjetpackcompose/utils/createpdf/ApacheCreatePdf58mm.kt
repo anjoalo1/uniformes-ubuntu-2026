@@ -18,7 +18,21 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-class ApacheCreatePdf58mm (val widthMM: Float, val heightMM: Float){
+
+//archivos despues del error
+import android.content.ContentValues
+import android.content.Context
+import android.net.Uri
+//import android.os.Environment
+import android.provider.MediaStore
+import java.io.IOException
+
+import java.io.OutputStream
+
+
+
+
+class ApacheCreatePdf58mm (val widthMM: Float, val heightMM: Float, private val context: Context){
 
     // Constante de conversión de Milímetros a Puntos (1 mm ≈ 2.83464567 puntos)
     private val POINTS_PER_MM = 72f / 25.4f
@@ -213,7 +227,14 @@ class ApacheCreatePdf58mm (val widthMM: Float, val heightMM: Float){
 
 
         contentStream.close()
-        document.save(file)
+
+        //document.save(file)
+
+        guardarPdfEnDescargas(
+            context = context,
+            document = document,
+            nombreArchivo = "58mm$myfecha.pdf"
+        )
         document.close()
     }
 
@@ -221,6 +242,39 @@ class ApacheCreatePdf58mm (val widthMM: Float, val heightMM: Float){
 
 // document.save("documento_58mm.pdf")
 // document.close()
+
+
+    private fun guardarPdfEnDescargas(
+        context: Context,
+        document: PDDocument,
+        nombreArchivo: String
+    ): Uri {
+        val valores = ContentValues().apply {
+            put(MediaStore.Downloads.DISPLAY_NAME, nombreArchivo)
+            put(MediaStore.Downloads.MIME_TYPE, "application/pdf")
+            put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+        }
+
+        val resolver = context.contentResolver
+
+        val uri = resolver.insert(
+            MediaStore.Downloads.EXTERNAL_CONTENT_URI,
+            valores
+        ) ?: throw IOException("No se pudo crear el archivo PDF en Descargas")
+
+        try {
+            resolver.openOutputStream(uri)?.use { output: OutputStream ->
+                document.save(output)
+            } ?: throw IOException("No se pudo abrir el archivo para escritura")
+
+            return uri
+        } catch (e: Exception) {
+            resolver.delete(uri, null, null)
+            throw e
+        }
+    }
+
+
 }
 
 fun loadDataCustomerFinal(dataCustomer: DataCustomer):List<DataHeaderCustomer2>{

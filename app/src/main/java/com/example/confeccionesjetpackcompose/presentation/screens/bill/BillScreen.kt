@@ -46,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -77,11 +78,19 @@ fun ProductosScreen(navController: NavController, viewModel: BillViewModel = vie
     val productos by viewModel.productos
 
     val total = viewModel.calcularTotal()
-    val apachePdfCreator = ApacheCreatePdf();
+    //val apachePdfCreator = ApacheCreatePdf();
+
+
+
     val dataCustomerSee by viewModel.datacustomer
     // 1. **Estado** para controlar la visibilidad del diálogo numero 2
     var showDialog by remember { mutableStateOf(false) }
     var showDialogFinishBill by remember { mutableStateOf(false) }
+
+
+    //despues del error:
+
+
 
 
     BackgroundImage {
@@ -546,8 +555,15 @@ fun AlertDialogExample(
 
     val coroutineScope = rememberCoroutineScope()
     val estadoTerminacion = remember { mutableStateOf(false) }
-    val apachePdfCreator = ApacheCreatePdf();
-    val apachePdfCreator58 = ApacheCreatePdf58mm(58f, heighPage58mm);
+    //val apachePdfCreator = ApacheCreatePdf();
+
+    //variables despues del error:
+    val context = LocalContext.current
+    val apachePdfCreator = remember { ApacheCreatePdf(context) }
+    val context85mm = LocalContext.current
+
+
+    //val apachePdfCreator58 = ApacheCreatePdf58mm(58f, heighPage58mm, context85mm);
 
     AlertDialog(
         icon = {
@@ -581,10 +597,37 @@ fun AlertDialogExample(
                 onClick = {
                     onConfirmation()
                     coroutineScope.launch {
-                        apachePdfCreator.headerPdfLocal(datacustomer)
-                        val nameFileEnd = apachePdfCreator.crearPDFConTabla(productos)
-                        viewModel.loadNameBillFile(nameFileEnd)
-                        apachePdfCreator58.headerPdfLocal(datacustomer, productos)
+                        //apachePdfCreator.headerPdfLocal(datacustomer)
+
+
+                        try {
+                            apachePdfCreator.headerPdfLocal(datacustomer)
+                            val nameFileEnd = apachePdfCreator.crearPDFConTabla(productos)
+                            viewModel.loadNameBillFile(nameFileEnd)
+                            println("PDF guardado como: $nameFileEnd.pdf")
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+                        //2 try para el de 58 mm
+                        try {
+                            val apachePdfCreator58 = ApacheCreatePdf58mm(widthMM = 58f, heighPage58mm, context = context85mm
+                            )
+
+                            apachePdfCreator58.headerPdfLocal(datacustomer, productos)
+
+                            println("PDF generado correctamente")
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+
+
+
+
+                        //val nameFileEnd = apachePdfCreator.crearPDFConTabla(productos)
+                        //viewModel.loadNameBillFile(nameFileEnd)
+                        //apachePdfCreator58.headerPdfLocal(datacustomer, productos)
                     }
                     estadoTerminacion.value = true
                 },
