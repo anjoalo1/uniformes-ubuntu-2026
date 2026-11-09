@@ -76,6 +76,8 @@ import kotlin.collections.forEach
 //menu para cargar diferentes tipos de busqueda
 //ya sea por talla unica
 //tallas diferentes
+
+val colorLetter = Color(0xFF000000)
 @Composable
 fun MenuDesplegableConOpciones(uniformesdb: List<UniformesDb>) {
 
@@ -92,32 +94,34 @@ fun MenuDesplegableConOpciones(uniformesdb: List<UniformesDb>) {
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            DropdownMenuItem({Text("Talla Unica")},onClick = {
+            DropdownMenuItem({Text("Talla Unica",color = colorLetter)},onClick = {
                 opcionSeleccionada = "Opción A"
                 expanded = false
             })
 
 
-            DropdownMenuItem({  Text("Tallas diferentes")},onClick = {
+            DropdownMenuItem({  Text("Tallas diferentes",color = colorLetter)},onClick = {
                 opcionSeleccionada = "Opción B"
                 expanded = false
             })
 
 
-            DropdownMenuItem({  Text("Por Colegio")},onClick = {
+            DropdownMenuItem({  Text("Por Colegio",color = colorLetter)},onClick = {
                 opcionSeleccionada = "Opción C"
                 expanded = false
             })
             // Agrega más opciones si quieres
         }
+
+        when (opcionSeleccionada) {
+            "Opción A" -> SelectSizeProduct(uniformesdbpasar)
+            "Opción B" -> dropDownNameArticcle(uniformesdbpasar)
+            "Opción C" -> SearchBySchool(uniformesdbpasar)
+            // Agrega más casos según las opciones
+        }
     }
 
-    when (opcionSeleccionada) {
-        "Opción A" -> SelectSizeProduct(uniformesdbpasar)
-        "Opción B" -> dropDownNameArticcle(uniformesdbpasar)
-        "Opción C" -> SearchBySchool(uniformesdbpasar)
-        // Agrega más casos según las opciones
-    }
+
 }
 
 
@@ -149,14 +153,12 @@ fun SelectSizeProduct(uniformesdbpasar: List<UniformesDb>, viewModel: BillViewMo
                     Icon(painter = painterResource(id = R.drawable.baseline_format_list_numbered_24), contentDescription = "null")
 
                 }
-                Text(text = selectedSize,
-                    color = Color(0xFF000000)
-                )
+                Text(text = selectedSize,color = colorLetter)
             }
             DropdownMenu(expanded = expanded1, onDismissRequest = { expanded1 = false }) {
                 sizesUniformes.forEach { sizeItem ->
                     DropdownMenuItem(
-                        text = { Text(sizeItem.size) },
+                        text = { Text(sizeItem.size,color = colorLetter) },
                         onClick = {
                             selectedSize = sizeItem.size
                             expanded1 = false
@@ -177,9 +179,7 @@ fun SelectSizeProduct(uniformesdbpasar: List<UniformesDb>, viewModel: BillViewMo
                         modifier = Modifier.size(30.dp)
                     )
                 }
-                Text(text = selectedGender,
-                        color = Color(0xFF000000)
-                )
+                Text(text = selectedGender, color = colorLetter)
             }
 
 
@@ -188,14 +188,14 @@ fun SelectSizeProduct(uniformesdbpasar: List<UniformesDb>, viewModel: BillViewMo
                 onDismissRequest = { expanded2 = false }
             ) {
                 DropdownMenuItem(
-                    { Text(text = "Masculino") },
+                    { Text(text = "Masculino",color = colorLetter) },
                     onClick = {
                         selectedGender = "male"
                         expanded2 = false
                     }
                 )
                 DropdownMenuItem(
-                    { Text(text = "Femenino") },
+                    { Text(text = "Femenino",color = colorLetter) },
                     onClick = {
                         selectedGender = "female"
                         expanded2 = false
@@ -220,7 +220,7 @@ fun SelectSizeProduct(uniformesdbpasar: List<UniformesDb>, viewModel: BillViewMo
                 }
             },
             contentPadding = PaddingValues(1.dp)
-        ){Text("Search")}
+        ){Text("Search",color = colorLetter)}
     }
 
 }
@@ -272,12 +272,12 @@ fun dropDownNameArticcle(uniformesdbpasar: List<UniformesDb>, viewModel: BillVie
                     )
 
                 }
-                Text(text = selectedSize)
+                Text(text = selectedSize,color = colorLetter)
             }
             DropdownMenu(expanded = expanded1, onDismissRequest = { expanded1 = false }) {
                 searchUniformesByNameArticle.forEach { nameArticle ->
                     DropdownMenuItem(
-                        text = { Text(nameArticle) },
+                        text = { Text(nameArticle,color = colorLetter) },
                         onClick = {
                             selectedSize = nameArticle
                             expanded1 = false
@@ -298,14 +298,14 @@ fun dropDownNameArticcle(uniformesdbpasar: List<UniformesDb>, viewModel: BillVie
                         modifier = Modifier.size(30.dp)
                     )
                 }
-                Text(text = selectedGender)
+                Text(text = selectedGender,color = colorLetter)
             }
 
 
             DropdownMenu(expanded = expanded2, onDismissRequest = { expanded2 = false }) {
                 searchUniformesBySizeArticle.forEach { sizeArticle ->
                     DropdownMenuItem(
-                        text = { Text(sizeArticle) },
+                        text = { Text(sizeArticle,color = colorLetter) },
                         onClick = {
                             selectedGender = sizeArticle
                             expanded2 = false
@@ -341,7 +341,7 @@ fun dropDownNameArticcle(uniformesdbpasar: List<UniformesDb>, viewModel: BillVie
                 }
             },
             contentPadding = PaddingValues(1.dp)
-        ){Text("Search")}
+        ){Text("Search",color = colorLetter)}
     }
 
 }
@@ -402,13 +402,13 @@ fun SearchBySchool(uniformesdbpasar: List<UniformesDb>, viewModel: BillViewModel
                         modifier = Modifier.size(30.dp)
                     )
                 }
-                Text(text = selectedSchool)
+                Text(text = selectedSchool,color = colorLetter)
             }
 
             DropdownMenu(expanded = expanded1, onDismissRequest = { expanded1 = false }) {
                 schoolNameArray.forEach { nameSchool ->
                     DropdownMenuItem(
-                        text = { Text(nameSchool) },
+                        text = { Text(nameSchool,color = colorLetter) },
                         onClick = {
                             selectedSchool = nameSchool
                             expanded1 = false
@@ -429,12 +429,12 @@ fun SearchBySchool(uniformesdbpasar: List<UniformesDb>, viewModel: BillViewModel
                     Icon(painter = painterResource(id = R.drawable.baseline_format_list_numbered_24), contentDescription = "null")
 
                 }
-                Text(text = selectedSize)
+                Text(text = selectedSize,color = colorLetter)
             }
             DropdownMenu(expanded = expanded2, onDismissRequest = { expanded2 = false }) {
                 sizesUniformes.forEach { sizeItem ->
                     DropdownMenuItem(
-                        text = { Text(sizeItem.size) },
+                        text = { Text(sizeItem.size,color = colorLetter) },
                         onClick = {
                             selectedSize = sizeItem.size
                             expanded2 = false
@@ -455,7 +455,7 @@ fun SearchBySchool(uniformesdbpasar: List<UniformesDb>, viewModel: BillViewModel
                 val addUniformeBySchool = viewModel.addUniformeBySchool(searchUniformesBySizeArticle)
             },
             contentPadding = PaddingValues(1.dp)
-        ){Text("Search")}
+        ){Text("Search",color = colorLetter)}
 
     }
 }
@@ -470,12 +470,12 @@ fun SearchBySchool(uniformesdbpasar: List<UniformesDb>, viewModel: BillViewModel
 @Composable
 fun dataCustomerRelevant(dataCustomerSee: DataCustomer){
     Column {
-        Text(text = "Data Customer")
-        Text(text = "Nombre: ${dataCustomerSee.name}")
-        Text(text = "Identificación: ${dataCustomerSee.cardId}")
-        Text(text = "Direccion: ${dataCustomerSee.address}")
-        Text(text = "Teléfono: ${dataCustomerSee.cellNumber}")
-        Text(text = "Email: ${dataCustomerSee.email}")
+        Text(text = "Data Customer",color = colorLetter)
+        Text(text = "Nombre: ${dataCustomerSee.name}",color = colorLetter)
+        Text(text = "Identificación: ${dataCustomerSee.cardId}",color = colorLetter)
+        Text(text = "Direccion: ${dataCustomerSee.address}",color = colorLetter)
+        Text(text = "Teléfono: ${dataCustomerSee.cellNumber}",color = colorLetter)
+        Text(text = "Email: ${dataCustomerSee.email}",color = colorLetter)
     }
 }
 
@@ -687,123 +687,3 @@ fun searchUniformByGenderAndSize(uniformesdbpasar: List<UniformesDb>, size: Stri
 * funcion para definir manualmente un producto
 *
 * */
-@Composable
-fun manualEntranceProduct(viewModel: BillViewModel = viewModel()){
-
-    var nameArticle by remember { mutableStateOf("") }
-    var size by remember { mutableStateOf("") }
-    var price by remember { mutableStateOf("") }
-    var amount by remember { mutableStateOf("") }
-    var nameError by rememberSaveable { mutableStateOf(false) }
-    var sizeError by rememberSaveable { mutableStateOf(false) }
-    var showDialogInputsProducts by remember { mutableStateOf(false) }
-    ExtendedFloatingActionButton(onClick = { showDialogInputsProducts = true },
-
-        icon = { Icon(Icons.Filled.Add, contentDescription = "Icono") },
-        text = { Text(text = "Ingresar Manualmente") },
-        // 1. Configura la forma (Shape) igual que en tu botón
-        shape = RoundedCornerShape(10.dp),
-        // 2. Usa FloatingActionButtonDefaults para asignar el color de fondo
-        containerColor = Color(0xFFE53935),
-        // 3. Usa FloatingActionButtonDefaults para la elevación
-        elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 4.dp)
-
-        )
-
-    if(showDialogInputsProducts){
-
-
-
-    AlertDialog(
-        onDismissRequest = { /* cerrar dialogo */ },
-        title = { Text("Agregar uniforme") },
-        text = {
-            Column {
-                // Aquí van los TextField y demás componentes como en tu código
-                TextField(
-                    value = nameArticle,
-                    onValueChange = {
-                        nameArticle = it
-                        nameError = it.isNullOrEmpty()
-                    },
-                    label = { Text("Nombre") }
-                )
-
-                if (nameError) {
-                    Text("⚠️ Debes ingresar un nombre", color = Color.Red)
-                }
-                TextField(
-                    value = size,
-                    onValueChange = {
-                        size = it
-                        sizeError = it.isNullOrEmpty()
-                    },
-                    label = { Text("Talla") }
-                )
-                if(sizeError){
-                    Text("⚠️ Debes ingresar un size", color = Color.Red)
-                }
-
-                TextField(
-                    value = price,
-                    onValueChange = { input ->
-                        if (input.matches(Regex("^(-)?\\d+(\\.\\d{1,2})?$"))) { // Permite solo números y punto decimal
-                            price = input
-                        }
-                    },
-                    label = { Text("Precio Unidad") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                )
-
-
-                TextField(
-                    value = amount,
-                    onValueChange = { newValue ->
-                        if (newValue.matches(Regex("^\\d*\$"))) { // Solo dígitos permitidos
-                            amount = newValue
-                        }
-                    },
-                    label = { Text("Cantidad") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                )
-
-
-                //Button(onClick = {}) { Text("Add Uniforme") }
-            }
-        },
-        confirmButton = {
-            Button(onClick = {
-                // lógica para insertar uniforme
-                if(price.toDoubleOrNull() == null || amount.toIntOrNull()== null){
-
-                }else{
-                    val calculaFechas = CalculaFechas().obtenerNewFecha2().takeLast(4)
-                    val concatenado = calculaFechas.joinToString(separator = "").toInt()
-                    val uniformeManual = Uniformes(id= concatenado, nameArticle= nameArticle, size=size, price= price.toDouble(), amount = amount.toInt())
-                    viewModel.addOrUpdateUniforme(uniformeManual)
-                }
-            },
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
-                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
-                ) {
-                Text("Add Uniforme")
-            }
-        },
-        dismissButton = {
-            Button(onClick = {
-                /* cerrar dialogo */
-                showDialogInputsProducts = false
-
-            },
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE53935)),
-                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
-                ) {
-                Text("Cancelar")
-            }
-        }
-    )
-
-        }
-}

@@ -32,8 +32,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -70,6 +71,9 @@ import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
+
+val colorLetter = Color(0xFF000000)
+
 
 @Composable
 fun ProductosScreen(navController: NavController, viewModel: BillViewModel = viewModel(), viewModeldD:UniformesDbViewModel) {
@@ -432,7 +436,7 @@ fun DialogoConInputs(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Ingrese sus datos",
+                        text = "Ingrese sus datos", color =  colorLetter,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         textAlign = TextAlign.Center
@@ -447,7 +451,11 @@ fun DialogoConInputs(
                         label = { Text("Nombre") },
                         leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, tint = Color(0xFF4693E0)) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = Color.Red,   // 👈 Color cuando el usuario está escribiendo
+                            unfocusedTextColor = Color.Black  // 👈 Color cuando el campo no está seleccionado
+                        )
                     )
                     TextField(
                         value = idCard,
@@ -455,7 +463,11 @@ fun DialogoConInputs(
                         label = { Text("ID Card") },
                         leadingIcon = { Icon(Icons.Default.CreditCard, contentDescription = null, tint = Color(0xFF4CAF50)) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = Color.Red,   // 👈 Color cuando el usuario está escribiendo
+                            unfocusedTextColor = Color.Black  // 👈 Color cuando el campo no está seleccionado
+                        )
                     )
                     TextField(
                         value = address,
@@ -463,7 +475,11 @@ fun DialogoConInputs(
                         label = { Text("Direccion") },
                         leadingIcon = { Icon(Icons.Default.LocationOn, contentDescription = null, tint = Color(0xFFFF9800)) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = Color.Red,   // 👈 Color cuando el usuario está escribiendo
+                            unfocusedTextColor = Color.Black  // 👈 Color cuando el campo no está seleccionado
+                        )
                     )
                     TextField(
                         value = cellNumber,
@@ -471,7 +487,11 @@ fun DialogoConInputs(
                         label = { Text("Telefono") },
                         leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null, tint = Color(0xFF9C27B0)) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = Color.Red,   // 👈 Color cuando el usuario está escribiendo
+                            unfocusedTextColor = Color.Black  // 👈 Color cuando el campo no está seleccionado
+                        )
                     )
                     TextField(
                         value = email,
@@ -479,7 +499,11 @@ fun DialogoConInputs(
                         label = { Text("Email") },
                         leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = Color(0xFFE91E63)) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = Color.Red,   // 👈 Color cuando el usuario está escribiendo
+                            unfocusedTextColor = Color.Black  // 👈 Color cuando el campo no está seleccionado
+                        )
                     )
                     TextField(
                         value = aclaration,
@@ -487,7 +511,11 @@ fun DialogoConInputs(
                         label = { Text("Aclaraciones") },
                         leadingIcon = { Icon(Icons.Default.Info, contentDescription = null, tint = Color(0xFF607D8B)) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = Color.Red,   // 👈 Color cuando el usuario está escribiendo
+                            unfocusedTextColor = Color.Black  // 👈 Color cuando el campo no está seleccionado
+                        )
                     )
                 }
             },

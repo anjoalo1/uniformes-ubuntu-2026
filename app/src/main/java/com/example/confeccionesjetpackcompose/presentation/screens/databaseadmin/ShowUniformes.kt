@@ -49,8 +49,11 @@ import java.io.File
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 
@@ -79,8 +82,8 @@ fun ListUniformesDb(navController: NavController, viewModeldD:UniformesDbViewMod
             items(uniformesdb){uniforme->
                 UniformesItem(uniforme = uniforme, onDeleteUniformesDb = {uniformesdbToDelete->
                     viewModel.deleteUniformesDb(uniformesdbToDelete) },
-                onEditUniformesDb = {uniformesDbToEdit -> viewModel.updateUniformesDb(uniformesDbToEdit)}
-            )
+                    onEditUniformesDb = {uniformesDbToEdit -> viewModel.updateUniformesDb(uniformesDbToEdit)}
+                )
 
             }
 
@@ -219,15 +222,15 @@ fun UniformesItem(uniforme: UniformesDb, onDeleteUniformesDb:(UniformesDb)->Unit
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(1.dp),
-        //.background(Color(0xFF603680)),
+            .padding(1.dp)
+        .background(Color(0xFF1111AA)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        Text(text = "${uniforme.nameArticle}", modifier = Modifier.weight(0.10f))
-        Text(text = "${uniforme.price}", modifier = Modifier.weight(0.10f))
-        Text(text = "${uniforme.size} ", modifier = Modifier.weight(0.05f), textAlign = TextAlign.Left)
-        Text(text = "${uniforme.amount} ", modifier = Modifier.weight(0.05f), textAlign = TextAlign.Left)
+        Text(text = "${uniforme.nameArticle}", modifier = Modifier.weight(0.10f), color = Color(0xFFFFFFFF))
+        Text(text = "${uniforme.price}", modifier = Modifier.weight(0.10f),color = Color(0xFFFFFFFF))
+        Text(text = "${uniforme.size} ", modifier = Modifier.weight(0.05f), textAlign = TextAlign.Left,color = Color(0xFFFFFFFF))
+        Text(text = "${uniforme.amount} ", modifier = Modifier.weight(0.05f), textAlign = TextAlign.Left,color = Color(0xFFFFFFFF))
         //boton para modificar un elemento
         Button(
             modifier = Modifier
@@ -312,10 +315,20 @@ fun UniformesItem(uniforme: UniformesDb, onDeleteUniformesDb:(UniformesDb)->Unit
             text = {
                 Column {
                     Text("Nombre Articulo:")
-                    TextField(value = editedName, onValueChange = { editedName = it })
+                    TextField(value = editedName, onValueChange = { editedName = it },
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = Color.Blue,   // 👈 Color cuando el usuario está escribiendo
+                            unfocusedTextColor = Color.Red  // 👈 Color cuando el campo no está seleccionado
+                        )
+                        )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text("Size:")
-                    TextField(value = editedSize, onValueChange = { editedSize = it })
+                    TextField(value = editedSize, onValueChange = { editedSize = it },
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = Color.Blue,   // 👈 Color cuando el usuario está escribiendo
+                            unfocusedTextColor = Color.Red  // 👈 Color cuando el campo no está seleccionado
+                        )
+                        )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text("Precio:")
                     TextField(
@@ -326,7 +339,11 @@ fun UniformesItem(uniforme: UniformesDb, onDeleteUniformesDb:(UniformesDb)->Unit
                             if (newDouble != null) {
                                 editedPrice = newDouble
                             }
-                        }
+                        },
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = Color.Blue,   // 👈 Color cuando el usuario está escribiendo
+                            unfocusedTextColor = Color.Red  // 👈 Color cuando el campo no está seleccionado
+                        )
                     )
                 }
             },
@@ -344,7 +361,8 @@ fun UniformesItem(uniforme: UniformesDb, onDeleteUniformesDb:(UniformesDb)->Unit
                 TextButton(onClick = { showEditDialog = false }) {
                     Text("Cancelar")
                 }
-            }
+            },
+            containerColor = Color(0xFF1111FF)
         )
     }
 
