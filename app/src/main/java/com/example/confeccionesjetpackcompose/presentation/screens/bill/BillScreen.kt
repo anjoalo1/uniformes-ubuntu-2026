@@ -247,6 +247,7 @@ fun ProductosScreen(navController: NavController, viewModel: BillViewModel = vie
                         Text("Generar Factura", fontSize = 14.sp)
                     }
 
+                    /*
                     Button(
                         onClick = { },
                         modifier = Modifier
@@ -264,6 +265,8 @@ fun ProductosScreen(navController: NavController, viewModel: BillViewModel = vie
                         Spacer(modifier = Modifier.width(8.dp))
                         Text("Guardar Cotizacion", fontSize = 14.sp)
                     }
+
+                     */
 
                     // 2. **Llamada condicional** a tu función AlertDialogExample
                     if (showDialog) {

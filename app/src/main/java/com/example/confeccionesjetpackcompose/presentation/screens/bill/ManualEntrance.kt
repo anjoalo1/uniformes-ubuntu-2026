@@ -63,7 +63,7 @@ fun manualEntranceProduct(viewModel: BillViewModel = viewModel()){
 
         AlertDialog(
             onDismissRequest = { /* cerrar dialogo */ },
-            title = { Text("Agregar uniforme") },
+            title = { Text("Agregar uniforme", color=colorLetter) },
             text = {
                 Column {
                     // Aquí van los TextField y demás componentes como en tu código

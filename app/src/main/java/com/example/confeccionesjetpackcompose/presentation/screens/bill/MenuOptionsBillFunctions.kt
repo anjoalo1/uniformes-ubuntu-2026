@@ -40,6 +40,7 @@ import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -85,7 +86,9 @@ fun MenuDesplegableConOpciones(uniformesdb: List<UniformesDb>) {
     var expanded by remember { mutableStateOf(false) }
     var opcionSeleccionada by remember { mutableStateOf<String?>(null) }
 
-    Box {
+    Box (modifier=Modifier
+        .background(Color(0xFF1111AA))
+    ){
         IconButton(onClick = { expanded = true }) {
             //Text(text = opcionSeleccionada ?: "Selecciona una opción")
             Icon(Icons.Default.Menu, contentDescription = "Menú")
